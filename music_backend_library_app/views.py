@@ -10,7 +10,7 @@ def music_list(request):
     if request.method == "GET":
         music = Music_library.objects.all()
         serializer =MusicLibrarySerializer(music, many = True)
-        return Response(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
     
     elif request.method == "POST":
         serializer =  MusicLibrarySerializer(data=request.data)
@@ -24,14 +24,14 @@ def music_details(request,pk):
     music = get_object_or_404(Music_library,pk=pk)
     if request.method == "GET":
         serializer = MusicLibrarySerializer(music)
-        return Response(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
     
     
     elif request.method == "PUT":
         serializer = MusicLibrarySerializer(music, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
     
     elif request.method == "DELETE":
         music.delete()
